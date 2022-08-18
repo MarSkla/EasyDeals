@@ -22,6 +22,80 @@ public with sharing class B2BGetInfo {
     );
   }
 
+//moja START
+    @AuraEnabled
+    public static ConnectApi.ProductOverviewCollection getProducts(String communityId, String effectiveAccountId) {
+
+      // List<String> ids = [SELECT ID FROM Product2 WHERE ....]
+      List<String> ids = new List<String>();
+
+      ids.add('01t7Q000002b2EaQAI');
+      // ids.add('01t7Q000002b2F4QAI');
+      // ids.add('01t7Q000002b2EzQAI');
+      // ids.add('01t7Q000002b2EpQAI');
+      // ids.add('01t7Q000002b2EqQAI');
+      // ids.add('01t7Q000002b2EuQAI');
+
+      List<String> fields = new List<String>();
+      fields.add('Name');
+      
+
+      System.debug('B2BGetInfo.getProducts entered');
+      System.debug('communityId: ' + communityId);
+      System.debug('effectiveAccountId: ' + effectiveAccountId);
+    
+      String webstoreIdGetProducts = B2BUtils.resolveCommunityIdToWebstoreId(communityId);
+      System.debug('webstoreIdGetProducts: ' + webstoreIdGetProducts);
+    
+      try {
+        ConnectApi.ProductOverviewCollection result = ConnectApi.CommerceCatalog.getProducts(
+          webstoreIdGetProducts,
+          effectiveAccountId,
+          ids, //ids
+          null, //skus
+          fields, //fields
+          false, //exclude fields
+          false //exclude prices
+        );
+
+        ConnectApi.ProductOverview resultProducts = result.products[0];
+        System.debug('resultProducts: ..........');
+        System.debug('resultProducts: ' + resultProducts);
+        System.debug('resultProducts.fields: ' + resultProducts.fields);
+        System.debug('resultProducts.fields.get(\'Name\'): ' + resultProducts.fields.get('Name'));
+
+
+        System.debug('B2BGetInfo.getProducts.try entered');
+        System.debug('total: ' + result.total);
+        
+        System.debug('products: ' + result.products);
+
+        return result;
+
+
+
+        
+
+        // return ConnectApi.CommerceCatalog.getProducts(
+        //   webstoreIdGetProducts,
+        //   effectiveAccountId,
+        //   ids,
+        //   null,
+        //   fields,
+        //   false,
+        //   false
+        // );
+        
+      } catch (Exception e) {
+        System.debug('B2BGetInfo.getProducts.catch entered');
+
+        throw new AuraHandledException(e.getMessage());
+      }
+
+
+    }
+//-------------------------moja END-------------------------
+
   @AuraEnabled(cacheable=true)
   public static Boolean checkProductIsInStock(String productId) {
     /*
