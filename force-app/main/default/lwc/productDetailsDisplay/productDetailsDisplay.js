@@ -26,8 +26,8 @@ export default class ProductDetailsDisplay extends NavigationMixin(
      * Identify user type
      */
     @api
-    get guestUser() {
-        return this._isGuest
+    get isGuestUser() {
+        return isGuest
     }
 
     /**
@@ -182,7 +182,6 @@ export default class ProductDetailsDisplay extends NavigationMixin(
     _quantityFieldValue = 1;
     _categoryPath;
     _resolvedCategoryPath = [];
-    _isGuest = isGuest;
 
     // A bit of coordination logic so that we can resolve product URLs after the component is connected to the DOM,
     // which the NavigationMixin implicitly requires to function properly.
@@ -192,7 +191,7 @@ export default class ProductDetailsDisplay extends NavigationMixin(
     });
 
     connectedCallback() {
-        console.log('PDP guestUSer: ' + this.guestUser);
+        console.log('PDP guestUSer: ' + this.isGuestUser);
         this._resolveConnected();
     }
 

@@ -20,8 +20,8 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
      * Identify user type
      */
     @api
-    get guestUser() {
-        return this._isGuest
+    get isGuestUser() {
+        return this.isGuest
     }
     
     
@@ -294,7 +294,7 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
      * The connectedCallback() lifecycle hook fires when a component is inserted into the DOM.
      */
     connectedCallback() {
-        console.log('isGuest: ' + this.guestUser);
+        console.log('isGuest: ' + this.isGuestUser);
         this.updateCartInformation();
     }
 
@@ -462,5 +462,4 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
      * @type {ConnectApi.CartSummary}
      */
     _cartSummary;
-    _isGuest = isGuest;
 }
