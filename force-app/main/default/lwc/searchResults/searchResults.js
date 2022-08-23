@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+import isGuest from '@salesforce/user/isGuest';
 import communityId from '@salesforce/community/Id';
 import productSearch from '@salesforce/apex/B2BSearchControllerSample.productSearch';
 import getCartSummary from '@salesforce/apex/B2BGetInfo.getCartSummary';
@@ -16,6 +16,15 @@ import { transformData } from './dataNormalizer';
  * 'B2B Custom Search Results'
  */
 export default class SearchResults extends NavigationMixin(LightningElement) {
+    /**
+     * Identify user type
+     */
+    @api
+    get guestUser() {
+        return this._isGuest
+    }
+    
+    
     /**
      * Gets the effective account - if any - of the user viewing the product.
      *
@@ -123,6 +132,7 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
      * @private
      */
     triggerProductSearch() {
+        console.log('triggerProductSearch entered');
         const searchQuery = JSON.stringify({
             searchTerm: this.term,
             categoryId: this.recordId,
@@ -131,7 +141,8 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
             // using ./dataNormalizer's normalizedCardContentMapping
             //fields: normalizedCardContentMapping(this._cardContentMapping),
             page: this._pageNumber - 1,
-            includePrices: true
+            includePrices: true,
+            includeQuantityRule: true
         });
 
         this._isLoading = true;
@@ -283,6 +294,7 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
      * The connectedCallback() lifecycle hook fires when a component is inserted into the DOM.
      */
     connectedCallback() {
+        console.log('isGuest: ' + this.guestUser);
         this.updateCartInformation();
     }
 
@@ -336,10 +348,18 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
      * @private
      */
     handleClearAll(/*evt*/) {
+        console.log('handleClearAll entered');
+        console.log('------------------');
+        console.log('this._refinements: ' + this._refinements);
         this._refinements = [];
+        console.log('this._refinements: ' + this._refinements);
+        console.log('------------------');
+        console.log('this._recordId: ' + this._recordId);
         this._recordId = this._landingRecordId;
+        console.log('this._recordId: ' + this._recordId);
+        console.log('------------------');
         this._pageNumber = 1;
-        this.template.querySelector('c-filter').clearAll();
+        this.template.querySelector('c-search-filter').clearAll();
         this.triggerProductSearch();
     }
 
@@ -442,4 +462,5 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
      * @type {ConnectApi.CartSummary}
      */
     _cartSummary;
+    _isGuest = isGuest;
 }
