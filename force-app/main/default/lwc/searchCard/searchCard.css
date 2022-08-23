@@ -14,6 +14,11 @@ figure img {
     cursor: pointer;
 }
 
+checkbox {
+    background-color: darkgray;
+    max-width: 50px;
+}
+
 .field-item {
     display: grid;
 }

@@ -1,11 +1,13 @@
 <template>
     <article class={cardContainerClass}>
+        <section>
+            
+        </section>
         <section class="image-area">
             <figure if:true={showImage} onclick={notifyShowDetail}>
                 <img src={image.url} alt={image.alternateText} />
             </figure>
         </section>
-        <p>It's ALIVE!!</p>
 
         <section class="fields-area">
             <template for:each={fields} for:item="field">
@@ -27,7 +29,7 @@
             <span
                 if:false={hasPrice}
                 class="slds-text-heading_small slds-p-top_xx-small slds-p-bottom_xx-small"
-                >Price Unavailable</span
+                >Price hidden unless logging in</span
             >
             <span class="slds-p-top_xx-small slds-p-bottom_xx-small">
                 <lightning-formatted-number
@@ -50,7 +52,7 @@
                 </span>
             </span>
         </section>
-        <section class="action-area">
+        <section if:false={isGuestUser} class="action-area">
             <button
                 class="slds-button slds-button_brand slds-button_stretch"
                 disabled={actionDisabled}

@@ -1,4 +1,6 @@
 import { LightningElement, api } from 'lwc';
+import isGuest from '@salesforce/user/isGuest';
+
 
 /**
  * An organized display of a single product card.
@@ -7,6 +9,16 @@ import { LightningElement, api } from 'lwc';
  * @fires SearchCard#showdetail
  */
 export default class SearchCard extends LightningElement {
+    /**
+     * Identify user type
+     */
+    @api
+    get isGuestUser() {
+        console.log('isGuest: ' + isGuest);
+        return isGuest
+    }
+
+
     /**
      * An event fired when the user clicked on the action button. Here in this
      *  this is an add to cart button.
