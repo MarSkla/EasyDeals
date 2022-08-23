@@ -21,7 +21,7 @@
             <div class="heading">
                 <h2 class="slds-text-heading_medium">{name}</h2>
                 <div class="slds-p-top_x-small">SKU: {sku}</div>
-                <div class="slds-p-bottom_medium">
+                <!-- <div class="slds-p-bottom_medium">
                     <template for:each={_displayableFields} for:item="field">
                         <div
                             key={field.id}
@@ -34,7 +34,7 @@
                             ></lightning-formatted-rich-text>
                         </div>
                     </template>
-                </div>
+                </div> -->
                 <!-- <div if:true={inStock} class="slds-p-bottom_small">
                     <lightning-icon
                         icon-name="utility:check"
@@ -60,7 +60,7 @@
                 >
                 </lightning-formatted-number>
             </div>
-            <div class="slds-p-vertical_small">
+            <div if:false={guestUser} class="slds-p-vertical_small">
                 <lightning-layout vertical-align="end">
                     <lightning-layout-item size="2">
                         <lightning-input
