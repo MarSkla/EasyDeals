@@ -301,4 +301,30 @@ export default class SearchCard extends LightningElement {
             })
         );
     }
+
+    _productIdsToCompare = [];
+
+    _objectReceived;
+
+    addToListToCompare(event) {
+        console.log('wynik: ' + event.target.checked);
+        console.log('przekazało Id: ' + event.target.dataset.id);
+        console.log('przekazało Value: ' + event.target.dataset.value);
+        this._objectReceived = event.target.dataset.value;
+        console.log('_objectReceived: ' + this._objectReceived);
+
+
+
+        if(this._productIdsToCompare < 3) {
+            this._productIdsToCompare.push(event.target.dataset.id);
+        } else {
+            console.log('za dużo elementów');
+        }
+        this.productIdsToCompareLength();
+    }
+    
+    productIdsToCompareLength() {
+        console.log('_productIdsToCompare.length: ' + this._productIdsToCompare.length);
+    }
+
 }
