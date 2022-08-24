@@ -301,30 +301,79 @@ export default class SearchCard extends LightningElement {
             })
         );
     }
-
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     _productIdsToCompare = [];
+    // _test = ['test1', 'test2', 'test3']
 
-    _objectReceived;
+    // _objectReceived;
 
     addToListToCompare(event) {
-        console.log('wynik: ' + event.target.checked);
-        console.log('przekazało Id: ' + event.target.dataset.id);
-        console.log('przekazało Value: ' + event.target.dataset.value);
-        this._objectReceived = event.target.dataset.value;
-        console.log('_objectReceived: ' + this._objectReceived);
+        console.log('checked: ', event.target.checked);
+        console.log('passed Id: ', event.target.dataset.id);
+        console.log('passed Value: ', event.target.dataset.value);
+        // this._objectReceived = event.target.dataset.value;
+        // console.log('_objectReceived: ' + this._objectReceived);
 
+        console.log('before newId assignment');
 
+        let newId = event.target.dataset.id
 
-        if(this._productIdsToCompare < 3) {
-            this._productIdsToCompare.push(event.target.dataset.id);
-        } else {
-            console.log('za dużo elementów');
-        }
-        this.productIdsToCompareLength();
+        // console.log('before if');
+
+        // if(this._productIdsToCompare.length < 3) {
+        //     console.log('if entered');
+        //     console.log('_productIdsToCompare.length before intended add: ' + this._productIdsToCompare.length);
+            
+        //     this._productIdsToCompare = [this._productIdsToCompare, newId];
+        //     console.log('_productIdsToCompare.length after intended add: ' + this._productIdsToCompare.length);
+        //     console.log(this._productIdsToCompare.length);
+        // } else {
+        //     console.log('za dużo elementów');
+        // }
+        
+        console.log('_productIdsToCompare.length before intended add: ', this._productIdsToCompare.length);
+            this._productIdsToCompare.push(newId);
+            console.log(this._productIdsToCompare);
+        // this._productIdsToCompare = [... this._productIdsToCompare, newId];
+        console.log('_productIdsToCompare.length after intended add: ', this._productIdsToCompare.length);
+        // this._productIdsToCompare.forEach(element => {
+        //     console.log('element in _productIdsToCompare: ', element);
+        //     console.log('same: ', (element === newId));
+        // })
+
+        // this._test = [...this._test, 'test4']
+        // this._test.push('test5')
+
+        // this._test.forEach(element => {
+        //     console.log('element in _test: ' + element);
+        // })
+
+        // this.productIdsToCompareLength(newId);
+        console.log('addToListToCompare END');
     }
     
-    productIdsToCompareLength() {
-        console.log('_productIdsToCompare.length: ' + this._productIdsToCompare.length);
-    }
+    // productIdsToCompareLength(newElement) {
+    //     console.log('_productIdsToCompare.length: ' + this._productIdsToCompare.length);
+        
+    //     if(this._productIdsToCompare.length > 0) {
+    //         if(this._productIdsToCompare.length < 3) {
+    //             console.log('if entered');
+    //             console.log('_productIdsToCompare.length before intended add: ' + this._productIdsToCompare.length);
+    //             // this._productIdsToCompare = [...this._productIdsToCompare, newElement];
+    //             this._productIdsToCompare.push(newElement);
+
+    //             console.log('_productIdsToCompare.length after intended add: ' + this._productIdsToCompare.length);
+    //             // console.log(this._productIdsToCompare.length);
+    //         } else {
+    //             console.log('za dużo elementów');
+    //         }
+    //     } else {
+    //         this._productIdsToCompare = [newElement]
+    //     }
+
+    //     this._productIdsToCompare.forEach(element => {
+    //         console.log('Id already in array: ' + element);
+    //     });
+    // }
 
 }
