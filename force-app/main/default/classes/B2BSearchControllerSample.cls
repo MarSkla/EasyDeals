@@ -94,56 +94,57 @@ public with sharing class B2BSearchControllerSample {
 
 //???????????????????????????????????????
 
-@AuraEnabled
-public static Object productSearch(
-    String communityId,
-    String searchQuery,
-    String effectiveAccountId
-) {
+    @AuraEnabled
+    public static Object productSearch(
+        String communityId,
+        String searchQuery,
+        String effectiveAccountId
+    ) {
 
-    System.debug('communityId: ' + communityId);
-    System.debug('searchQuery: ' + searchQuery);
-    System.debug('effectiveAccountId: ' + effectiveAccountId);
+        System.debug('communityId: ' + communityId);
+        System.debug('searchQuery: ' + searchQuery);
+        System.debug('effectiveAccountId: ' + effectiveAccountId);
 
-    // Lookup the webstore ID associated with the community
+        // Lookup the webstore ID associated with the community
 
-    String webstoreId = B2BUtils.resolveCommunityIdToWebstoreId(communityId);
-    System.debug('webstoreId: ' + webstoreId);
+        String webstoreId = B2BUtils.resolveCommunityIdToWebstoreId(communityId);
+        System.debug('webstoreId: ' + webstoreId);
 
-    // if(!Test.isRunningTest()){
-    //     webstoreId = B2BUtils.resolveCommunityIdToWebstoreId(communityId);
-    // }else{
-    //     webstoreId='webId';
-    // }
+        // if(!Test.isRunningTest()){
+        //     webstoreId = B2BUtils.resolveCommunityIdToWebstoreId(communityId);
+        // }else{
+        //     webstoreId='webId';
+        // }
 
-    ConnectApi.ProductSearchInput searchTerms = (ConnectApi.ProductSearchInput)JSON.deserialize(searchQuery,ConnectApi.ProductSearchInput.class);
-    System.debug('searchTerms: ' + searchTerms);
+        ConnectApi.ProductSearchInput searchTerms = (ConnectApi.ProductSearchInput)JSON.deserialize(searchQuery,ConnectApi.ProductSearchInput.class);
+        System.debug('searchTerms: ' + searchTerms);
 
 
 
-    Object result = null;
+        Object result = null;
 
-    try {
-        result = ConnectApi.CommerceSearch.searchProducts(webstoreId, effectiveAccountId,searchTerms);
-        System.debug('result: ' + result);        
-    } catch (Exception e) {
-        throw e;  
-    } 
+        try {
+            result = ConnectApi.CommerceSearch.searchProducts(webstoreId, effectiveAccountId,searchTerms);
+            System.debug('result: ' + result);
+            System.debug('result.fields: ' + result)        
+        } catch (Exception e) {
+            throw e;  
+        } 
 
-    // try {
-    //     if(!Test.isRunningTest()){
-    //         result = ConnectApi.CommerceSearch.searchProducts(webstoreId, effectiveAccountId,searchTerms);
-    //     }else if(Test.isRunningTest() && communityId == 'null'){
-    //         CalloutException e = new CalloutException();
-    //         e.setMessage('This is a constructed exception!');
-    //         throw e;
-    //     }
+        // try {
+        //     if(!Test.isRunningTest()){
+        //         result = ConnectApi.CommerceSearch.searchProducts(webstoreId, effectiveAccountId,searchTerms);
+        //     }else if(Test.isRunningTest() && communityId == 'null'){
+        //         CalloutException e = new CalloutException();
+        //         e.setMessage('This is a constructed exception!');
+        //         throw e;
+        //     }
 
-    // } catch (System.Exception e) {
-    //     throw e;
-    // }
-    return result;
-}
+        // } catch (System.Exception e) {
+        //     throw e;
+        // }
+        return result;
+    }
 //???????????????????????????????????????
 
 }

@@ -1,9 +1,14 @@
 <template>
     <article class={cardContainerClass}>
-        <lightning-layout-item class="checkbox">
-                <p> add to compare</p>
+        <lightning-layout>
+            <lightning-layout-item class="slds-var-p-right_xx-small">
+                <p>compare</p>
+            </lightning-layout-item>
+            <lightning-layout-item>
                 <lightning-input type="checkbox" data-id={displayData.id} onchange={addToListToCompare} data-value={displayData}></lightning-input>
-        </lightning-layout-item>
+            </lightning-layout-item>
+        </lightning-layout>
+        
         <section class="image-area">
             <figure if:true={showImage} onclick={notifyShowDetail}>
                 <img src={image.url} alt={image.alternateText} />
