@@ -110,11 +110,6 @@ public with sharing class B2BSearchControllerSample {
         String webstoreId = B2BUtils.resolveCommunityIdToWebstoreId(communityId);
         System.debug('webstoreId: ' + webstoreId);
 
-        // if(!Test.isRunningTest()){
-        //     webstoreId = B2BUtils.resolveCommunityIdToWebstoreId(communityId);
-        // }else{
-        //     webstoreId='webId';
-        // }
 
         ConnectApi.ProductSearchInput searchTerms = (ConnectApi.ProductSearchInput)JSON.deserialize(searchQuery,ConnectApi.ProductSearchInput.class);
         System.debug('searchTerms: ' + searchTerms);
@@ -126,23 +121,12 @@ public with sharing class B2BSearchControllerSample {
         try {
             result = ConnectApi.CommerceSearch.searchProducts(webstoreId, effectiveAccountId,searchTerms);
             System.debug('result: ' + result);
-            System.debug('result.fields: ' + result)        
+            System.debug('result.fields: ' + result);        
         } catch (Exception e) {
+            System.debug('error occured: ' + e);
             throw e;  
         } 
 
-        // try {
-        //     if(!Test.isRunningTest()){
-        //         result = ConnectApi.CommerceSearch.searchProducts(webstoreId, effectiveAccountId,searchTerms);
-        //     }else if(Test.isRunningTest() && communityId == 'null'){
-        //         CalloutException e = new CalloutException();
-        //         e.setMessage('This is a constructed exception!');
-        //         throw e;
-        //     }
-
-        // } catch (System.Exception e) {
-        //     throw e;
-        // }
         return result;
     }
 //???????????????????????????????????????
