@@ -34,6 +34,11 @@
                 onfacetvalueupdate={handleFacetValueUpdate}
             >
             </c-search-filter>
+            <lightning-button
+                variant="brand"
+                label="Compare selected"
+                onclick={displayComparingModal}>
+            </lightning-button>
         </aside>
         <section class="main-section">
             <c-search-layout
@@ -52,6 +57,36 @@
                 onnext={handleNextPage}
             >
             </c-search-paginator>
+        </section>        
+        <section if:true={isComparingModalOpen} role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Selected Products</h1>
+                </div>
+                <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-2">
+                    <div for:each={idsToCompare} for:item="selectedId" key={selectedId}>
+                        <p>{selectedId} still here</p>
+
+                    </div>
+                    <!-- <p>{idsToCompare}</p> -->
+                    <!-- <lightning-record-edit-form
+                        object-api-name="TV_Series__c"
+                        record-id={retrievedRecordToEdit}>
+                        <label class="slds-form-element__label slds-align_absolute-center" style="min-width: max-content" for="checkbox-interested"></label>
+                        <lightning-output-field id="modal-series-output-name" class="slds-form-element__label" field-name="Name"></lightning-output-field>
+                        <lightning-input-field id="modal-series-name" class="slds-form-element__label" field-name="Name"></lightning-input-field>
+                        <lightning-input-field id="modal-series-story" class="slds-form-element__label" field-name="TV_Series_Story__c"></lightning-input-field>
+                        <lightning-input-field id="modal-series-url" class="slds-form-element__label" field-name="Series_Trailer__c"></lightning-input-field>
+                        <lightning-input-field id="modal-series-review" class="slds-form-element__label" field-name="Series_review__c"></lightning-input-field>
+                        <lightning-input-field id="modal-series-logo" class="slds-form-element__label" field-name="TVSeries_Logo__c"></lightning-input-field>
+                        <div class="slds-col slds-size_full slds-align_absolute-center slds-var-p-around_medium slds-border_bottom">
+                            <lightning-button variant="success" type="submit" label="Update" onclick={closeEditModal}></lightning-button>
+                        </div>
+                    </lightning-record-edit-form> -->
+                    <lightning-button variant="nautral" type="submit" label="Close" onclick={closeComparingModal}></lightning-button>
+                </div>
+            </div>
+
         </section>
     </article>
 </template>

@@ -47,6 +47,22 @@ public with sharing class CacheController {
         return valueFromCache;
     }
 
+    @AuraEnabled
+    public static List<String> cleanCache(){
+        Cache.SessionPartition easyDealsPartition = Cache.Session.getPartition('local.EasyDeals');
+        List<String> emptyList = new List<String>();
+        easyDealsPartition.put('toCompare', emptyList);
+
+        // List<String> storedData = getFromCache();
+        // System.debug('CLEAN: stored data: ' + storedData);
+        // for (String storedId : storedData) {
+        //     System.debug('CLEAN: storedId inside loop: ' + storedId);
+        //     easyDealsPartition.remove(storedId);
+        // }
+        System.debug('EMPTY: ????' + getFromCache());
+        return getFromCache();
+    }
+
     // @AuraEnabled(cacheable=true)
     // public static void putToCache(String retrievedId, Object productToCompare){
     //     Cache.SessionPartition easyDealsPartition = Cache.Session.getPartition('local.EasyDeals');

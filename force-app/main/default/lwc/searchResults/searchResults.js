@@ -7,6 +7,8 @@ import productSearch from '@salesforce/apex/B2BSearchControllerSample.productSea
 import getCartSummary from '@salesforce/apex/B2BGetInfo.getCartSummary';
 import addToCart from '@salesforce/apex/B2BGetInfo.addToCart';
 import { transformData } from './dataNormalizer';
+import getFromCache from '@salesforce/apex/CacheController.getFromCache';
+import cleanCache from '@salesforce/apex/CacheController.cleanCache';
 
 /**
  * A search resutls component that shows results of a product search or
@@ -446,6 +448,36 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
                 // For this sample, we can just log the error
                 console.log(e);
             });
+    }
+
+    @api
+    idsToCompare;
+
+    displayComparingModal(){
+        getFromCache()
+        .then(result => {
+            this.idsToCompare = result;
+            this.isComparingModalOpen = true;
+        })
+        .catch(e => {
+            console.log('Error: ', e);
+        })
+    }
+
+    @api
+    isComparingModalOpen = false;
+
+    closeComparingModal(){
+        cleanCache()
+        .then(result => {
+            this.idsToCompare = result;
+            console.log('idsToCompare should be empty', this.idsToCompare);
+            this.isComparingModalOpen = false;
+        })
+        .catch(e => {
+            console.log('cleanCache error: ', e);
+        })
+        // this.isComparingModalOpen = false;
     }
 
     _displayData;
