@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import isGuest from '@salesforce/user/isGuest';
@@ -449,9 +449,12 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
                 console.log(e);
             });
     }
+    
+    // @wire??????????????????? monitor status getFromCache
+
 
     @api
-    idsToCompare;
+    idsToCompare = '';
 
     displayComparingModal(){
         getFromCache()
@@ -469,15 +472,23 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
 
     closeComparingModal(){
         cleanCache()
-        .then(result => {
-            this.idsToCompare = result;
-            console.log('idsToCompare should be empty', this.idsToCompare);
-            this.isComparingModalOpen = false;
-        })
+        // .then(result => {
+        //     this.idsToCompare = result;
+        //     console.log('idsToCompare should be empty', this.idsToCompare);
+        //     this.isComparingModalOpen = false;
+        // })
         .catch(e => {
             console.log('cleanCache error: ', e);
         })
+
+        this.idsToCompare = '';
+        console.log('idsToCompare should be empty', this.idsToCompare);
+        this.isComparingModalOpen = false;
         // this.isComparingModalOpen = false;
+    }
+
+    get disableButton(){
+        return (this.idsToCompare == '');
     }
 
     _displayData;
