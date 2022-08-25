@@ -3,25 +3,73 @@ public with sharing class CacheController {
     /**
      * Session cache controller to store and retrieve data required for functionality of comparing
      */
-
-    private Cache.SessionPartition easyDealsPartition = Cache.Session.getPartition('local.EasyDeals');
-
-    public void putToCache(String retrivewdName, String retrievedId){
-        System.debug('putToCache entered');
-        System.debug('retrivewdName: ' + retrivewdName);
-        System.debug('retrievedId: ' + retrievedId);
-        easyDealsPartition.put(retrievedId, retrivewdName);
+    
+    @AuraEnabled(cacheable=true)
+    public static void putToCache(String retrievedId){
+        System.debug('PUT: parameter: ' + retrievedId);
+        // System.debug('PUT: putToCache START');
+        List<String> collectedId = new List<String>();
+        // List<String> collectedId = getFromCache('ProductsToCompare'); //NullPointer
+        // System.debug('PUT: collectedId size: ' + collectedId.size());
         
-        System.debug('exiting putToCache');
+        Cache.SessionPartition easyDealsPartition = Cache.Session.getPartition('local.EasyDeals');
+
+        if(getFromCache() == null){
+            // System.debug('if START - in chache: ' + getFromCache());
+            collectedId.add(retrievedId);
+            // System.debug('if END - curent collectedId: ' + collectedId);
+        } else {
+            // System.debug('else START - in cache: ' + getFromCache());
+            collectedId = getFromCache();
+            collectedId.add(retrievedId);
+            // System.debug('else END - curent collectedId: ' + collectedId);
+        }
+
+        easyDealsPartition.put('toCompare', collectedId);
+        System.debug('PUT: getFromCache: ' + getFromCache());
+
+        // System.debug('PUT: all keys: ' + easyDealsPartition.getKeys());
+        // System.debug('PUT: value in cache: ' + easyDealsPartition.get('ProductsToCompare'));
+        System.debug('PUT: putToCache END');
+
     }
 
-    public String getFromCache(String storedKey){
-        System.debug('getFromCache entered');
-        System.debug('storedKey: ' + storedKey);
 
-        String valueFromCache = (String) easyDealsPartition.get(storedKey);
-        System.debug('valueFromCache: ' + valueFromCache);
+    @AuraEnabled(cacheable=true)
+    public static List<String> getFromCache(){
+        Cache.SessionPartition easyDealsPartition = Cache.Session.getPartition('local.EasyDeals');
+        System.debug('GET: getFromCache entered');
+        // System.debug('GET: parameter: ' + storedKey);
+
+        List<String> valueFromCache =(List<String>) easyDealsPartition.get('toCompare');
+        // String valueFromCache = (String) Cache.Session.get(storedKey);
+        // System.debug('GET: valueFromCache: ' + valueFromCache);
         return valueFromCache;
     }
+
+    // @AuraEnabled(cacheable=true)
+    // public static void putToCache(String retrievedId, Object productToCompare){
+    //     Cache.SessionPartition easyDealsPartition = Cache.Session.getPartition('local.EasyDeals');
+    //     System.debug('putToCache entered');
+    //     System.debug('retrievedId: ' + retrievedId);
+    //     System.debug('productToCompare: ' + productToCompare);
+    //     easyDealsPartition.put(retrievedId, productToCompare);
+    //     // Cache.Session.put(retrievedId, productToCompare);
+        
+    //     System.debug('exiting putToCache');
+    //     System.debug(easyDealsPartition);
+    // }
+
+    // @AuraEnabled(cacheable=true)
+    // public static Object getFromCache(String storedKey){
+    //     Cache.SessionPartition easyDealsPartition = Cache.Session.getPartition('local.EasyDeals');
+    //     System.debug('getFromCache entered');
+    //     System.debug('storedKey: ' + storedKey);
+
+    //     Object valueFromCache = easyDealsPartition.get(storedKey);
+    //     // String valueFromCache = (String) Cache.Session.get(storedKey);
+    //     System.debug('valueFromCache: ' + valueFromCache);
+    //     return valueFromCache;
+    // }
 
 }

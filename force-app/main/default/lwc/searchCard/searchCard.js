@@ -1,5 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import isGuest from '@salesforce/user/isGuest';
+import putToCache from '@salesforce/apex/CacheController.putToCache';
+
 
 
 /**
@@ -316,40 +318,53 @@ export default class SearchCard extends LightningElement {
 
         console.log('before newId assignment');
 
-        let newId = event.target.dataset.id
+        // putToCache(event.target.dataset.id, event.target.dataset.value)
+        putToCache({
+            retrievedId:event.target.dataset.id
+            // productToCompare: event.target.dataset.value
+        }) //test
 
-        // console.log('before if');
-
-        // if(this._productIdsToCompare.length < 3) {
-        //     console.log('if entered');
-        //     console.log('_productIdsToCompare.length before intended add: ' + this._productIdsToCompare.length);
-            
-        //     this._productIdsToCompare = [this._productIdsToCompare, newId];
-        //     console.log('_productIdsToCompare.length after intended add: ' + this._productIdsToCompare.length);
-        //     console.log(this._productIdsToCompare.length);
-        // } else {
-        //     console.log('za dużo elementów');
-        // }
+        console.log('after putToCache');
         
-        console.log('_productIdsToCompare.length before intended add: ', this._productIdsToCompare.length);
-            this._productIdsToCompare.push(newId);
-            console.log(this._productIdsToCompare);
-        // this._productIdsToCompare = [... this._productIdsToCompare, newId];
-        console.log('_productIdsToCompare.length after intended add: ', this._productIdsToCompare.length);
-        // this._productIdsToCompare.forEach(element => {
-        //     console.log('element in _productIdsToCompare: ', element);
-        //     console.log('same: ', (element === newId));
-        // })
+        // console.log('getFromCache: ', getFromCache(event.target.dataset.id));
 
-        // this._test = [...this._test, 'test4']
-        // this._test.push('test5')
 
-        // this._test.forEach(element => {
-        //     console.log('element in _test: ' + element);
-        // })
+        // let newId = event.target.dataset.id
 
-        // this.productIdsToCompareLength(newId);
-        console.log('addToListToCompare END');
+        // // console.log('before if');
+
+        // // if(this._productIdsToCompare.length < 3) {
+        // //     console.log('if entered');
+        // //     console.log('_productIdsToCompare.length before intended add: ' + this._productIdsToCompare.length);
+            
+        // //     this._productIdsToCompare = [this._productIdsToCompare, newId];
+        // //     console.log('_productIdsToCompare.length after intended add: ' + this._productIdsToCompare.length);
+        // //     console.log(this._productIdsToCompare.length);
+        // // } else {
+        // //     console.log('za dużo elementów');
+        // // }
+        
+        // console.log('_productIdsToCompare.length before intended add: ', this._productIdsToCompare.length);
+        //     this._productIdsToCompare.push(newId);
+        //     console.log(this._productIdsToCompare);
+        // // this._productIdsToCompare = [... this._productIdsToCompare, newId];
+        // console.log('_productIdsToCompare.length after intended add: ', this._productIdsToCompare.length);
+
+
+        // // this._productIdsToCompare.forEach(element => {
+        // //     console.log('element in _productIdsToCompare: ', element);
+        // //     console.log('same: ', (element === newId));
+        // // })
+
+        // // this._test = [...this._test, 'test4']
+        // // this._test.push('test5')
+
+        // // this._test.forEach(element => {
+        // //     console.log('element in _test: ' + element);
+        // // })
+
+        // // this.productIdsToCompareLength(newId);
+        // console.log('addToListToCompare END');
     }
     
     // productIdsToCompareLength(newElement) {
