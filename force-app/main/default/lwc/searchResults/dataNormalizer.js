@@ -7,6 +7,9 @@ import { resolve } from 'c/cmsResourceResolver';
  * @param {string} cardContentMapping
  */
 export function transformData(data, cardContentMapping) {
+    console.log('ENTERED dataNormalizer.js');
+    console.log('data parameter: ', data);
+    console.log('cardContentMapping parameter:', cardContentMapping);
     const DEFAULT_PAGE_SIZE = 20;
     const { productsPage = {}, categories = {}, facets = [], locale = '' } =
         data || {};
@@ -16,6 +19,7 @@ export function transformData(data, cardContentMapping) {
         products = [],
         pageSize = DEFAULT_PAGE_SIZE
     } = productsPage;
+    console.log('const productPage', productsPage);
 
     return {
         locale,

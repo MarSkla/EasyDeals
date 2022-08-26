@@ -157,6 +157,7 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
         })
             .then((result) => {
                 this.displayData = result;
+                console.log('productSearch result:', this.displayData);
                 this._isLoading = false;
                 console.log(result);
             })
@@ -523,8 +524,12 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
             this._productName = this._comparatorData.products[0].fields.Name;
             console.log('data from array test - id: ', this._comparatorData.products[0].id);
             this._productId = this._comparatorData.products[0].id;
-            console.log('data from array test - price: ', this._comparatorData.products[0].prices.unitPrice);
-            this._productPrice = this._comparatorData.products[0].prices.unitPrice;
+            if(this._comparatorData.products[0].prices != null){
+                this._productPrice = this._comparatorData.products[0].prices.unitPrice;
+            } else {
+                this._productPrice = 'log in as a customer to see the price';
+            }
+            console.log('data from array test - price: ', this._productPrice);
             this.isComparingModalOpen = true;
         })
         .then(
