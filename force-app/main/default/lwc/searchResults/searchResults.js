@@ -23,7 +23,7 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
      */
     @api
     get isGuestUser() {
-        return this.isGuest
+        return isGuest
     }
     
     

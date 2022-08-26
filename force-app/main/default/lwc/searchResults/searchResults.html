@@ -35,6 +35,7 @@
             >
             </c-search-filter>
             <lightning-button
+                if:false={isGuestUser}
                 variant="brand"
                 label="Compare selected"
                 onclick={displayComparingModal}>
