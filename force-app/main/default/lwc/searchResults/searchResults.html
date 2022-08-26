@@ -65,11 +65,17 @@
                     <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Selected Products</h1>
                 </div>
                 <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-2">
-                    <div for:each={idsToCompare} for:item="selectedId" key={selectedId}>
+                    <!-- <div for:each={idsToCompare} for:item="selectedId" key={selectedId}>
                         <p>{selectedId} still here</p>
-
-                    </div>
+                    </div> -->
                     <!-- <p>{idsToCompare}</p> -->
+                    <figure>
+                        <img src={imageUrl}>
+                    </figure>
+                    <p>Family: <b>{productFamily}</b></p>
+                    <p>Name: <b>{productName}</b></p>
+                    <p>Id: <b>{productId}</b></p>
+                    <p>Price: <b>{productPrice} Polish SuperGoldies</b></p>
                     <!-- <lightning-record-edit-form
                         object-api-name="TV_Series__c"
                         record-id={retrievedRecordToEdit}>

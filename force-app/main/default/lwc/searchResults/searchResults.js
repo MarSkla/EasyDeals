@@ -9,6 +9,7 @@ import addToCart from '@salesforce/apex/B2BGetInfo.addToCart';
 import { transformData } from './dataNormalizer';
 import getFromCache from '@salesforce/apex/CacheController.getFromCache';
 import cleanCache from '@salesforce/apex/CacheController.cleanCache';
+import getProducts from '@salesforce/apex/B2BGetInfo.getProducts';
 
 /**
  * A search resutls component that shows results of a product search or
@@ -452,16 +453,83 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
     
     // @wire??????????????????? monitor status getFromCache
 
+//----------------> return ids of products stored in cache ----------->
+    // @api
+    // idsToCompare = '';
+
+    // displayComparingModal(){
+    //     getFromCache()
+    //     .then(result => {
+    //         this.idsToCompare = result;
+    //         this.isComparingModalOpen = true;
+    //     })
+    //     .catch(e => {
+    //         console.log('Error: ', e);
+    //     })
+    // }
+//<---------------- return ids of products stored in cache <-----------
+
+
+
+    _comparatorData;
+
+    _imageUrl;
+    _productFamily;
+    _productName;
+    _productId;
+    _productPrice;
+  
 
     @api
-    idsToCompare = '';
+    get productFamily(){
+        return this._productFamily;
+    }
+
+    @api
+    get imageUrl(){
+        return this._imageUrl;
+    }
+
+    @api
+    get productName(){
+        return this._productName;
+    }
+
+    @api
+    get productId() {
+        return this._productId;
+    }
+
+    @api
+    get productPrice() {
+        return this._productPrice;
+    }
+
 
     displayComparingModal(){
-        getFromCache()
+        console.log('ENTERED displayComparingModal');
+        getProducts({
+            communityId: communityId,
+            effectiveAccountId: this.resolvedEffectiveAccountId
+        })
         .then(result => {
-            this.idsToCompare = result;
+            this._comparatorData = result;
+            console.log('retrieved coparatorData: ', this._comparatorData);
+            console.log('data from array test - image url: ', this._comparatorData.products[0].defaultImage.url);
+            this._imageUrl = this._comparatorData.products[0].defaultImage.url;
+            console.log('data from array test - Family: ', this._comparatorData.products[0].fields.Family);
+            this._productFamily = this._comparatorData.products[0].fields.Family;
+            console.log('data from array test - Name: ', this._comparatorData.products[0].fields.Name);
+            this._productName = this._comparatorData.products[0].fields.Name;
+            console.log('data from array test - id: ', this._comparatorData.products[0].id);
+            this._productId = this._comparatorData.products[0].id;
+            console.log('data from array test - price: ', this._comparatorData.products[0].prices.unitPrice);
+            this._productPrice = this._comparatorData.products[0].prices.unitPrice;
             this.isComparingModalOpen = true;
         })
+        .then(
+            console.log('getFromCache works: ', !!(getFromCache()))
+        )
         .catch(e => {
             console.log('Error: ', e);
         })
