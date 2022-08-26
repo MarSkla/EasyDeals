@@ -27,18 +27,19 @@ public with sharing class B2BGetInfo {
     public static ConnectApi.ProductOverviewCollection getProducts(String communityId, String effectiveAccountId) {
 
       // List<String> ids = [SELECT ID FROM Product2 WHERE ....]
-      List<String> ids = new List<String>();
+      // List<String> ids = new List<String>();
 
-      ids.add('01t7Q000002b2EaQAI');
+      // ids.add('01t7Q000002b2EaQAI');
       // ids.add('01t7Q000002b2F4QAI');
       // ids.add('01t7Q000002b2EzQAI');
       // ids.add('01t7Q000002b2EpQAI');
       // ids.add('01t7Q000002b2EqQAI');
       // ids.add('01t7Q000002b2EuQAI');
 
-      List<String> fields = new List<String>();
-      fields.add('Name');
+      // List<String> fields = new List<String>();
+      // fields.add('Name');
       
+      List<String> ids = CacheController.getFromCache();
 
       System.debug('B2BGetInfo.getProducts entered');
       System.debug('communityId: ' + communityId);
@@ -53,7 +54,7 @@ public with sharing class B2BGetInfo {
           effectiveAccountId,
           ids, //ids
           null, //skus
-          fields, //fields
+          null, //fields
           false, //exclude fields
           false //exclude prices
         );
