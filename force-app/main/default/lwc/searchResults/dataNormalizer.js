@@ -7,45 +7,34 @@ import { resolve } from 'c/cmsResourceResolver';
  * @param {string} cardContentMapping
  */
 export function transformData(data, cardContentMapping) {
-    console.log('ENTERED dataNormalizer.js');
-    console.log('data parameter: ', data);
-    console.log('cardContentMapping parameter:', cardContentMapping);
+    console.log('2. DATANORMALIZER entered');
+    // console.log('2. DATANORMALIZER - data parameter: ', data);
+    // console.log('2. DATANORMALIZER - cardContentMapping parameter:', cardContentMapping);
     const DEFAULT_PAGE_SIZE = 20;
     const { productsPage = {}, categories = {}, facets = [], locale = '' } =
         data || {};
+    // console.log('2. DATANORMALIZER - const productsPage{}: ', productsPage);
     const {
         currencyIsoCode = '',
         total = 0,
         products = [],
         pageSize = DEFAULT_PAGE_SIZE
     } = productsPage;
-    console.log('const productPage', productsPage);
+    console.log('2. DATANORMALIZER - const productPage', productsPage);
 
     return {
-        locale,
-        total,
-        pageSize,
-        categoriesData: categories,
+        locale, total, pageSize, categoriesData: categories, 
         facetsData: facets.map(
             ({
-                nameOrId,
-                attributeType,
-                facetType: type,
-                displayType,
-                displayName,
-                displayRank,
-                values
+                nameOrId, attributeType, facetType: type, displayType,
+                displayName, displayRank, values
             }) => {
                 return {
                     // include a unique identifier to avoid the collision
                     // between Product2 and variant custom fields
                     id: `${nameOrId}:${attributeType}`,
-                    nameOrId,
-                    attributeType,
-                    type,
-                    displayType,
-                    displayName,
-                    displayRank,
+                    nameOrId, attributeType, type, displayType,
+                    displayName, displayRank,
                     values: values.map((v) => ({ ...v, checked: false }))
                 };
             }
