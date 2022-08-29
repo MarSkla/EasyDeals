@@ -16,7 +16,7 @@ export default class SearchCard extends LightningElement {
      */
     @api
     get isGuestUser() {
-        console.log('isGuest: ' + isGuest);
+        // console.log('isGuest: ' + isGuest);
         return isGuest
     }
 
@@ -310,13 +310,13 @@ export default class SearchCard extends LightningElement {
     // _objectReceived;
 
     addToListToCompare(event) {
-        console.log('checked: ', event.target.checked);
-        console.log('passed Id: ', event.target.dataset.id);
-        console.log('passed Value: ', event.target.dataset.value);
+        // console.log('checked: ', event.target.checked);
+        // console.log('passed Id: ', event.target.dataset.id);
+        // console.log('passed Value: ', event.target.dataset.value);
         // this._objectReceived = event.target.dataset.value;
         // console.log('_objectReceived: ' + this._objectReceived);
 
-        console.log('before newId assignment');
+        // console.log('before newId assignment');
 
         // putToCache(event.target.dataset.id, event.target.dataset.value)
         putToCache({
@@ -324,7 +324,7 @@ export default class SearchCard extends LightningElement {
             // productToCompare: event.target.dataset.value
         }) //test
 
-        console.log('after putToCache');
+        // console.log('after putToCache');
         
         // console.log('getFromCache: ', getFromCache(event.target.dataset.id));
 
