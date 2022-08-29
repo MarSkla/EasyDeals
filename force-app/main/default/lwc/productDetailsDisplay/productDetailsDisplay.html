@@ -1,5 +1,5 @@
 <template>
-    <lightning-breadcrumbs class="slds-p-bottom_medium">
+    <!-- <lightning-breadcrumbs class="slds-p-bottom_medium">
         <template for:each={_resolvedCategoryPath} for:item="level">
             <lightning-breadcrumb
                 key={level.name}
@@ -8,7 +8,7 @@
             >
             </lightning-breadcrumb>
         </template>
-    </lightning-breadcrumbs>
+    </lightning-breadcrumbs> -->
     <div class="product-information">
         <div class="image slds-m-right_small">
             <figure
@@ -19,6 +19,16 @@
         </div>
         <div class="details-area">
             <div class="heading">
+                <div class="price slds-text-heading_medium slds-float_right">
+                    <span if:false={hasPrice}>Price Unavailable</span>
+                    <lightning-formatted-number
+                        if:true={hasPrice}
+                        currency-code={price.currency}
+                        format-style="currency"
+                        value={price.negotiated}
+                    >
+                    </lightning-formatted-number>
+                </div>
                 <h2 class="slds-text-heading_medium">{name}</h2>
                 <div class="slds-p-top_x-small">SKU: {sku}</div>
                 <!-- <div class="slds-p-bottom_medium">
@@ -50,16 +60,7 @@
                     <span class="slds-p-horizontal_small">Out of stock</span>
                 </div> -->
             </div>
-            <div class="price">
-                <span if:false={hasPrice}>Price Unavailable</span>
-                <lightning-formatted-number
-                    if:true={hasPrice}
-                    currency-code={price.currency}
-                    format-style="currency"
-                    value={price.negotiated}
-                >
-                </lightning-formatted-number>
-            </div>
+
             <div if:false={isGuestUser} class="slds-p-vertical_small">
                 <lightning-layout vertical-align="end">
                     <lightning-layout-item size="2">
@@ -110,6 +111,25 @@
                     ></lightning-formatted-rich-text>
                 </lightning-accordion-section>
             </lightning-accordion>
+            <lightning-accordion
+                active-section-name="reviews"
+                allow-multiple-sections-open>
+                <lightning-accordion-section
+                    name="reviews"
+                    label="Recent Reviews">
+                    <div for:each={reviews.data} for:item="review" key={review}>
+                        <p>Comment added by {review.CreatedBy.Name} on {review.CreatedDate}:</p>
+                        <p class="slds-border_bottom"><b>{review.Message__c}</b></p>                        
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+
+
+
+            <!-- <p><b>Recent reviews</b></p>
+            <lightning-layout-item for:each={reviews.data} for:item="review" key={review}>
+                <p>{review.CreatedDate} : {review.Message__c}</p>                        
+            </lightning-layout-item> -->
         </div>
     </div>
 </template>

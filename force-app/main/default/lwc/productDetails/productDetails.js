@@ -9,6 +9,7 @@ import createAndAddToList from '@salesforce/apex/B2BGetInfo.createAndAddToList';
 import getProductPrice from '@salesforce/apex/B2BGetInfo.getProductPrice';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { resolve } from 'c/cmsResourceResolver';
+import getReviews from '@salesforce/apex/B2BGetInfo.getReviews';
 
 /**
  * A detailed display of a product.
@@ -24,6 +25,7 @@ export default class ProductDetails extends LightningElement {
     get effectiveAccountId() {
         return this._effectiveAccountId;
     }
+    
 
     /**
      * Sets the effective account - if any - of the user viewing the product
@@ -58,6 +60,12 @@ export default class ProductDetails extends LightningElement {
      * @private
      */
     cartSummary;
+
+    @wire(getReviews, {
+        productId: '$recordId'
+    })
+    reviews;
+
 
     /**
      * The stock status of the product, i.e. whether it is "in stock."
@@ -100,6 +108,8 @@ export default class ProductDetails extends LightningElement {
      * The connectedCallback() lifecycle hook fires when a component is inserted into the DOM.
      */
     connectedCallback() {
+        console.log('PRODUCTDETAILS reviews: ', this.reviews);
+        console.log('PRODUCTDETAILS productPrice: ', this.productPrice);
         this.updateCartInformation();
     }
 

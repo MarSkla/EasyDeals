@@ -7,7 +7,6 @@
         variant="brand"
     >
     </lightning-spinner>
-    <p> THIS IS CUSTOM PRODUCT DETAIL PAGE</p>
     <c-product-details-display
         if:true={hasProduct}
         cart-locked={_isCartLocked}
@@ -21,6 +20,7 @@
         sku={displayableProduct.sku}
         onaddtocart={addToCart}
         oncreateandaddtolist={createAndAddToList}
+        reviews={reviews}
     >
     </c-product-details-display>
 </template>

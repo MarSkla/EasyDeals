@@ -1,6 +1,7 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import isGuest from '@salesforce/user/isGuest';
+import getReviews from '@salesforce/apex/B2BGetInfo.getReviews';
 
 
 // A fixed entry for the home page.
@@ -29,6 +30,11 @@ export default class ProductDetailsDisplay extends NavigationMixin(
     get isGuestUser() {
         return isGuest
     }
+
+    // @wire(getReviews, {
+    //     productId: '$recordId'
+    // })
+    // reviews;
 
     /**
      * An event fired when the user indicates the product should be added to their cart.
@@ -178,6 +184,9 @@ export default class ProductDetailsDisplay extends NavigationMixin(
     @api
     sku;
 
+    @api
+    reviews
+
     _invalidQuantity = false;
     _quantityFieldValue = 1;
     _categoryPath;
@@ -192,6 +201,7 @@ export default class ProductDetailsDisplay extends NavigationMixin(
 
     connectedCallback() {
         console.log('PDP guestUSer: ' + this.isGuestUser);
+        console.log('CO W REVIEWS: ', this.reviews);
         this._resolveConnected();
     }
 

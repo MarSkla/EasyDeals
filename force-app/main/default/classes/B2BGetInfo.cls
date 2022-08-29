@@ -23,8 +23,8 @@ public with sharing class B2BGetInfo {
   }
 
 //moja START
-    @AuraEnabled
-    public static ConnectApi.ProductOverviewCollection getProducts(String communityId, String effectiveAccountId) {
+  @AuraEnabled
+  public static ConnectApi.ProductOverviewCollection getProducts(String communityId, String effectiveAccountId) {
 
       // List<String> ids = [SELECT ID FROM Product2 WHERE ....]
       // List<String> ids = new List<String>();
@@ -73,10 +73,6 @@ public with sharing class B2BGetInfo {
 
         return result;
 
-
-
-        
-
         // return ConnectApi.CommerceCatalog.getProducts(
         //   webstoreIdGetProducts,
         //   effectiveAccountId,
@@ -95,6 +91,32 @@ public with sharing class B2BGetInfo {
 
 
     }
+
+  @AuraEnabled(cacheable=true)
+  public static List<Review__c> getReviews(String productId){
+
+    System.debug('GETREVIEWS entered with parameter: ' + productId);
+
+    try {
+      List<Review__c> reviewsRecentFive= [SELECT Message__c, Product__c, CreatedDate, CreatedBy.Name  FROM Review__c WHERE Product__c =: productId ORDER BY CreatedDate desc LIMIT 5];
+
+      System.debug('GETREVIEWS reviewsRecentFive: ' + reviewsRecentFive);
+      
+      return reviewsRecentFive;
+      
+      // return [SELECT Id, Message__c, Product__c, CreatedDate
+      //         FROM Review__c
+      //         WHERE Product__c =: productId
+      //         ORDER BY CreatedDate desc
+      //         LIMIT 5
+      // ];
+      
+    } catch (Exception e) {
+      throw new AuraHandledException(e.getMessage());
+    }
+  }
+
+
 //-------------------------moja END-------------------------
 
   @AuraEnabled(cacheable=true)
