@@ -65,17 +65,31 @@
                     <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Selected Products</h1>
                 </div>
                 <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-2">
+                    <div>
+                        <template for:each={comparatorData.products} for:item="product">
+                            <lightning-layout-item key={product} class="slds-grid slds-gutters">
+                                <c-compare-element
+                                    compare-data={product}>    
+                                </c-compare-element>
+                            </lightning-layout-item>
+        <!--                             
+                                    <p>{product.id}</p>
+                                    <p>{product.sku}</p>
+                                    <p>{}</p>
+                                    -->
+        
+                        </template>
                     <!-- <div for:each={idsToCompare} for:item="selectedId" key={selectedId}>
                         <p>{selectedId} still here</p>
                     </div> -->
                     <!-- <p>{idsToCompare}</p> -->
-                    <figure>
+                    <!-- <figure>
                         <img src={imageUrl}>
                     </figure>
                     <p>Family: <b>{productFamily}</b></p>
                     <p>Name: <b>{productName}</b></p>
                     <p>Id: <b>{productId}</b></p>
-                    <p>Price: <b>{productPrice}</b></p>
+                    <p>Price: <b>{productPrice}</b></p> -->
                     <!-- <lightning-record-edit-form
                         object-api-name="TV_Series__c"
                         record-id={retrievedRecordToEdit}>
@@ -90,7 +104,9 @@
                             <lightning-button variant="success" type="submit" label="Update" onclick={closeEditModal}></lightning-button>
                         </div>
                     </lightning-record-edit-form> -->
-                    <lightning-button variant="nautral" type="submit" label="Close" onclick={closeComparingModal}></lightning-button>
+                    </div>
+                    <lightning-button 
+                        class="slds-border_top" variant="nautral" type="submit" label="Close" onclick={closeComparingModal}></lightning-button>
                 </div>
             </div>
 
