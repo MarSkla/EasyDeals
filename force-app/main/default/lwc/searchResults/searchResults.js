@@ -10,6 +10,7 @@ import { transformData } from './dataNormalizer';
 import getFromCache from '@salesforce/apex/CacheController.getFromCache';
 import cleanCache from '@salesforce/apex/CacheController.cleanCache';
 import getProducts from '@salesforce/apex/B2BGetInfo.getProducts';
+import { prepareData } from './dataPreparator';
 
 /**
  * A search resutls component that shows results of a product search or
@@ -57,6 +58,7 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
         return this._recordId;
     }
     set recordId(value) {
+        // console.log('1. SEARCHRESULT - set recordID: ', value);
         this._recordId = value;
         this._landingRecordId = value;
         this.triggerProductSearch();
@@ -135,7 +137,7 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
      * @private
      */
     triggerProductSearch() {
-        console.log('triggerProductSearch entered');
+        // console.log('1. SEARCHRESULT - triggerProductSearch entered');
         const searchQuery = JSON.stringify({
             searchTerm: this.term,
             categoryId: this.recordId,
@@ -156,10 +158,9 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
             effectiveAccountId: this.resolvedEffectiveAccountId
         })
             .then((result) => {
+                console.log('1. SEARCHRESULT - productSearch result:', result);
                 this.displayData = result;
-                console.log('productSearch result:', this.displayData);
                 this._isLoading = false;
-                console.log(result);
             })
             .catch((error) => {
                 this.error = error;
@@ -198,7 +199,10 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
         return this._displayData || {};
     }
     set displayData(data) {
+        // console.log('1. SEARCHRESULT - entered set displaydata(data)');
+        // console.log('1. SEARCHRESULT - set displaydata(data) parameter: ', data);
         this._displayData = transformData(data, this._cardContentMapping);
+        console.log('1. SEARCHRESULT - displaydatya (DATANORMALIZER returned): ', this._displayData);
     }
 
     /**
@@ -298,7 +302,7 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
      * The connectedCallback() lifecycle hook fires when a component is inserted into the DOM.
      */
     connectedCallback() {
-        console.log('isGuest: ' + this.isGuestUser);
+        // console.log('1. SEARCHRESULT - isGuest: ' + this.isGuestUser);
         this.updateCartInformation();
     }
 
@@ -474,6 +478,15 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
 
     _comparatorData;
 
+    @api
+    get comparatorData() {
+        return this._comparatorData;
+    }
+    set comparatorData(value) {
+        // this._comparatorData = prepareData(value);
+        this._comparatorData = value;
+    }
+
     _imageUrl;
     _productFamily;
     _productName;
@@ -481,59 +494,71 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
     _productPrice;
   
 
-    @api
-    get productFamily(){
-        return this._productFamily;
-    }
+    // @api
+    // get productFamily(){
+    //     return this._productFamily;
+    // }
+
+    // @api
+    // get imageUrl(){
+    //     return this._imageUrl;
+    // }
+
+    // @api
+    // get productName(){
+    //     return this._productName;
+    // }
+
+    // @api
+    // get productId() {
+    //     return this._productId;
+    // }
+
+    // @api
+    // get productPrice() {
+    //     return this._productPrice;
+    // }
 
     @api
-    get imageUrl(){
-        return this._imageUrl;
+    get productId(){
+        return this.comparatorData.id;
+    }
+    
+    @api
+    get productSku(){
+        return this.comparatorData.sku;
     }
 
-    @api
-    get productName(){
-        return this._productName;
-    }
-
-    @api
-    get productId() {
-        return this._productId;
-    }
-
-    @api
-    get productPrice() {
-        return this._productPrice;
-    }
+    
 
 
     displayComparingModal(){
-        console.log('ENTERED displayComparingModal');
+        // console.log('ENTERED displayComparingModal');
         getProducts({
             communityId: communityId,
             effectiveAccountId: this.resolvedEffectiveAccountId
         })
         .then(result => {
-            this._comparatorData = result;
-            console.log('retrieved coparatorData: ', this._comparatorData);
-            console.log('data from array test - image url: ', this._comparatorData.products[0].defaultImage.url);
-            this._imageUrl = this._comparatorData.products[0].defaultImage.url;
-            console.log('data from array test - Family: ', this._comparatorData.products[0].fields.Family);
-            this._productFamily = this._comparatorData.products[0].fields.Family;
-            console.log('data from array test - Name: ', this._comparatorData.products[0].fields.Name);
-            this._productName = this._comparatorData.products[0].fields.Name;
-            console.log('data from array test - id: ', this._comparatorData.products[0].id);
-            this._productId = this._comparatorData.products[0].id;
-            if(this._comparatorData.products[0].prices != null){
-                this._productPrice = this._comparatorData.products[0].prices.unitPrice;
-            } else {
-                this._productPrice = 'log in as a customer to see the price';
-            }
-            console.log('data from array test - price: ', this._productPrice);
-            this.isComparingModalOpen = true;
+            this.comparatorData = result,
+            console.log('1. SEARCHRESULT - _comparatorData: ', this.comparatorData);
+            // console.log('data from array test - image url: ', this._comparatorData.products[0].defaultImage.url);
+            // this._imageUrl = this._comparatorData.products[0].defaultImage.url;
+            // console.log('data from array test - Family: ', this._comparatorData.products[0].fields.Family);
+            // this._productFamily = this._comparatorData.products[0].fields.Family;
+            // console.log('data from array test - Name: ', this._comparatorData.products[0].fields.Name);
+            // this._productName = this._comparatorData.products[0].fields.Name;
+            // console.log('data from array test - id: ', this._comparatorData.products[0].id);
+            // this._productId = this._comparatorData.products[0].id;
+            // if(this._comparatorData.products[0].prices != null){
+            //     this._productPrice = this._comparatorData.products[0].prices.unitPrice;
+            // } else {
+            //     this._productPrice = 'log in as a customer to see the price';
+            // }
+            // console.log('data from array test - price: ', this._productPrice);
+            this.isComparingModalOpen = true
         })
         .then(
-            console.log('getFromCache works: ', !!(getFromCache()))
+            // console.log('getFromCache works: ', !!(getFromCache()))
         )
         .catch(e => {
             console.log('Error: ', e);
@@ -555,7 +580,7 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
         })
 
         this.idsToCompare = '';
-        console.log('idsToCompare should be empty', this.idsToCompare);
+        // console.log('idsToCompare should be empty', this.idsToCompare);
         this.isComparingModalOpen = false;
         // this.isComparingModalOpen = false;
     }
