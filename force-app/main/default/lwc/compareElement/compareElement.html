@@ -1,4 +1,27 @@
 <template>
+
+    <section>
+        <lightning-spinner
+            if:true={isLoading}
+            class="slds-is-absolute slds-align_absolute-center"
+            alternative-text="Loading products..."
+            size="medium"
+            variant="brand"
+            >
+        </lightning-spinner>
+    </section>
+    
+    <lightning-layout-item>
+        <lightning-layout-item>
+            <img src={image}/>
+        </lightning-layout-item>
+        <lightning-layout-item>
+            <p>{fields.Name}</p>
+        </lightning-layout-item>
+        <lightning-layout-item>
+            <p>{price.unitPrice}</p>
+        </lightning-layout-item>
+    </lightning-layout-item>
     <!-- <tr>
 
         <td><img src={image}/></td>
@@ -12,11 +35,11 @@
 
     </tr> -->
 
-    <lightning-layout class="slds-p-around_small">
+    <!-- <lightning-layout class="slds-p-around_small">
             <img src={image}/>
             <div>{fields.Name}</div>
             <div>{price.unitPrice}</div>
-    </lightning-layout>
+    </lightning-layout> -->
     
     <!-- <lightning-layout class="slds-p-around_small">
         <lightning-layout-item>

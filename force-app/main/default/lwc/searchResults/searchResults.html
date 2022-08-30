@@ -58,58 +58,85 @@
                 onnext={handleNextPage}
             >
             </c-search-paginator>
-        </section>        
-        <section if:true={isComparingModalOpen} role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
-            <div class="slds-modal__container">
-                <div class="slds-modal__header">
-                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Selected Products</h1>
-                </div>
-                <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-2">
-                    <div>
-                        <template for:each={comparatorData.products} for:item="product">
-                            <lightning-layout-item key={product} class="slds-grid slds-gutters">
-                                <c-compare-element
-                                    compare-data={product}>    
-                                </c-compare-element>
-                            </lightning-layout-item>
-        <!--                             
-                                    <p>{product.id}</p>
-                                    <p>{product.sku}</p>
-                                    <p>{}</p>
-                                    -->
-        
-                        </template>
-                    <!-- <div for:each={idsToCompare} for:item="selectedId" key={selectedId}>
-                        <p>{selectedId} still here</p>
-                    </div> -->
-                    <!-- <p>{idsToCompare}</p> -->
-                    <!-- <figure>
-                        <img src={imageUrl}>
-                    </figure>
-                    <p>Family: <b>{productFamily}</b></p>
-                    <p>Name: <b>{productName}</b></p>
-                    <p>Id: <b>{productId}</b></p>
-                    <p>Price: <b>{productPrice}</b></p> -->
-                    <!-- <lightning-record-edit-form
-                        object-api-name="TV_Series__c"
-                        record-id={retrievedRecordToEdit}>
-                        <label class="slds-form-element__label slds-align_absolute-center" style="min-width: max-content" for="checkbox-interested"></label>
-                        <lightning-output-field id="modal-series-output-name" class="slds-form-element__label" field-name="Name"></lightning-output-field>
-                        <lightning-input-field id="modal-series-name" class="slds-form-element__label" field-name="Name"></lightning-input-field>
-                        <lightning-input-field id="modal-series-story" class="slds-form-element__label" field-name="TV_Series_Story__c"></lightning-input-field>
-                        <lightning-input-field id="modal-series-url" class="slds-form-element__label" field-name="Series_Trailer__c"></lightning-input-field>
-                        <lightning-input-field id="modal-series-review" class="slds-form-element__label" field-name="Series_review__c"></lightning-input-field>
-                        <lightning-input-field id="modal-series-logo" class="slds-form-element__label" field-name="TVSeries_Logo__c"></lightning-input-field>
-                        <div class="slds-col slds-size_full slds-align_absolute-center slds-var-p-around_medium slds-border_bottom">
-                            <lightning-button variant="success" type="submit" label="Update" onclick={closeEditModal}></lightning-button>
-                        </div>
-                    </lightning-record-edit-form> -->
+        </section>
+        <div>
+
+            <section if:true={isComparingModalOpen} role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Selected Products</h1>
                     </div>
-                    <lightning-button 
-                        class="slds-border_top" variant="nautral" type="submit" label="Close" onclick={closeComparingModal}></lightning-button>
+                    <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-2">
+                        <!-- <table >
+                            <tr for:each={comparatorData.products} for:item="product" key={product}>
+                                <td>{product.Id}</td>
+                            </tr>
+                        </table> -->
+
+                            <!-- best as for now -->
+                            <ul class="slds-list_horizontal slds-align_absolute-center">
+                                <li for:each={comparatorData.products} for:item="product" key={product} class="slds-box">
+                                    <c-compare-element
+                                        compare-data={product} class="slds-p-around_small">    
+                                    </c-compare-element>
+                                </li>
+                            </ul>
+                            <!-- best as for now -->
+
+
+
+                            <!-- <lightning-layout for:each={comparatorData.products} for:item="product" key={product}>
+                                <lightning-layout-item>
+                                    <c-compare-element
+                                        compare-data={product}>    
+                                    </c-compare-element>
+                                </lightning-layout-item>
+                            </lightning-layout> -->
+    
+                            <!-- WORKED -->
+                            <!-- <template for:each={comparatorData.products} for:item="product">
+                                <lightning-layout-item key={product} class="slds-grid slds-gutters">
+                                    <c-compare-element
+                                        compare-data={product}>    
+                                    </c-compare-element>
+                                </lightning-layout-item>        
+                            </template> -->
+                            <!-- WORKED -->
+    
+                        <!-- <div for:each={idsToCompare} for:item="selectedId" key={selectedId}>
+                            <p>{selectedId} still here</p>
+                        </div> -->
+                        <!-- <p>{idsToCompare}</p> -->
+                        <!-- <figure>
+                            <img src={imageUrl}>
+                        </figure>
+                        <p>Family: <b>{productFamily}</b></p>
+                        <p>Name: <b>{productName}</b></p>
+                        <p>Id: <b>{productId}</b></p>
+                        <p>Price: <b>{productPrice}</b></p> -->
+                        <!-- <lightning-record-edit-form
+                            object-api-name="TV_Series__c"
+                            record-id={retrievedRecordToEdit}>
+                            <label class="slds-form-element__label slds-align_absolute-center" style="min-width: max-content" for="checkbox-interested"></label>
+                            <lightning-output-field id="modal-series-output-name" class="slds-form-element__label" field-name="Name"></lightning-output-field>
+                            <lightning-input-field id="modal-series-name" class="slds-form-element__label" field-name="Name"></lightning-input-field>
+                            <lightning-input-field id="modal-series-story" class="slds-form-element__label" field-name="TV_Series_Story__c"></lightning-input-field>
+                            <lightning-input-field id="modal-series-url" class="slds-form-element__label" field-name="Series_Trailer__c"></lightning-input-field>
+                            <lightning-input-field id="modal-series-review" class="slds-form-element__label" field-name="Series_review__c"></lightning-input-field>
+                            <lightning-input-field id="modal-series-logo" class="slds-form-element__label" field-name="TVSeries_Logo__c"></lightning-input-field>
+                            <div class="slds-col slds-size_full slds-align_absolute-center slds-var-p-around_medium slds-border_bottom">
+                                <lightning-button variant="success" type="submit" label="Update" onclick={closeEditModal}></lightning-button>
+                            </div>
+                        </lightning-record-edit-form> -->
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button 
+                            variant="nautral" type="submit" label="Close" onclick={closeComparingModal}>
+                        </lightning-button>
                 </div>
             </div>
-
         </section>
-    </article>
+    </div>        
+</article>
+<!-- <div class="slds-backdrop slds-backdrop_open"></div> -->
 </template>

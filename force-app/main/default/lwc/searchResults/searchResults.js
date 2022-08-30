@@ -10,7 +10,6 @@ import { transformData } from './dataNormalizer';
 import getFromCache from '@salesforce/apex/CacheController.getFromCache';
 import cleanCache from '@salesforce/apex/CacheController.cleanCache';
 import getProducts from '@salesforce/apex/B2BGetInfo.getProducts';
-import { prepareData } from './dataPreparator';
 
 /**
  * A search resutls component that shows results of a product search or
@@ -483,7 +482,6 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
         return this._comparatorData;
     }
     set comparatorData(value) {
-        // this._comparatorData = prepareData(value);
         this._comparatorData = value;
     }
 
